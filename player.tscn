@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cal1pb5kftete"]
+[gd_scene load_steps=4 format=3 uid="uid://cal1pb5kftete"]
 
 [ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player.gd" id="1_4flbx"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
+size = Vector2(40, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
 size = Vector2(40, 20)
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("player", "camera")]
@@ -17,3 +20,9 @@ camera = NodePath("Camera")
 [node name="Body" type="Sprite2D" parent="Pivot"]
 position = Vector2(10, 0)
 texture = SubResource("PlaceholderTexture2D_pq8q7")
+
+[node name="PlayerCollider" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollider"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_4flbx")

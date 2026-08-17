@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgkl57c4s0w13"]
+
+[ext_resource type="Script" uid="uid://c115f6hb7otfo" path="res://death_ui.gd" id="1_brogy"]
+
+[node name="DeathUI" type="Control" node_paths=PackedStringArray("button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_brogy")
+button = NodePath("Button")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 274.0
+offset_right = 763.0
+offset_bottom = 343.0
+text = "You are dead"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 316.0
+offset_right = 594.0
+offset_bottom = 347.0
+text = "Respawn"

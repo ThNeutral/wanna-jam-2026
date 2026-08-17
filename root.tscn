@@ -1,15 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://boael5r4pptwp"]
+[gd_scene load_steps=8 format=3 uid="uid://boael5r4pptwp"]
 
+[ext_resource type="PackedScene" uid="uid://crfa0thbfsc35" path="res://hand.tscn" id="1_jnlp7"]
 [ext_resource type="PackedScene" uid="uid://cal1pb5kftete" path="res://player.tscn" id="1_pq8q7"]
+[ext_resource type="PackedScene" uid="uid://d0gataxv65jwy" path="res://enemy.tscn" id="2_pyidc"]
+[ext_resource type="PackedScene" uid="uid://dta45l4si5xwx" path="res://enemy_spawner.tscn" id="3_vvh5c"]
+[ext_resource type="PackedScene" uid="uid://dgkl57c4s0w13" path="res://death_ui.tscn" id="4_28aoi"]
+[ext_resource type="PackedScene" uid="uid://e1otca1mxncu" path="res://item_selector.tscn" id="6_l8v81"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pyidc"]
 size = Vector2(30, 30)
 
 [node name="Root" type="Node2D"]
 
+[node name="Hand" parent="." node_paths=PackedStringArray("item_selector") instance=ExtResource("1_jnlp7")]
+position = Vector2(-224, 69)
+item_selector = NodePath("../CanvasLayer/ItemSelection")
+
 [node name="Player" parent="." instance=ExtResource("1_pq8q7")]
-camera_speed = 20.0
+camera_speed = 75.0
+total_health = 5
 
 [node name="Reference" type="Sprite2D" parent="."]
 position = Vector2(73, -42)
 texture = SubResource("PlaceholderTexture2D_pyidc")
+
+[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_pyidc")]
+position = Vector2(51, -116)
+speed = 11.0
+player = NodePath("../Player")
+
+[node name="EnemySpawner" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_vvh5c")]
+position = Vector2(-500, -220)
+spawn_interval = 1.0
+player = NodePath("../Player")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DeathUI" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("4_28aoi")]
+player = NodePath("../../Player")
+
+[node name="ItemSelection" parent="CanvasLayer" instance=ExtResource("6_l8v81")]

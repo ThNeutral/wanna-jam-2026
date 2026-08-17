@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://crfa0thbfsc35"]
+
+[ext_resource type="Script" uid="uid://d3byngmvyvokm" path="res://hand.gd" id="1_u4p2i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6wgf"]
+size = Vector2(10, 30)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q6wgf"]
+size = Vector2(10, 30)
+
+[node name="Hand" type="Node2D" node_paths=PackedStringArray("area")]
+script = ExtResource("1_u4p2i")
+area = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_q6wgf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_q6wgf")
