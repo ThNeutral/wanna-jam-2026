@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://boael5r4pptwp"]
+
+[ext_resource type="PackedScene" uid="uid://cal1pb5kftete" path="res://player.tscn" id="1_pq8q7"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pyidc"]
+size = Vector2(30, 30)
+
+[node name="Root" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_pq8q7")]
+camera_speed = 20.0
+
+[node name="Reference" type="Sprite2D" parent="."]
+position = Vector2(73, -42)
+texture = SubResource("PlaceholderTexture2D_pyidc")

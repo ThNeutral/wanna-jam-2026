@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cal1pb5kftete"]
+
+[ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player.gd" id="1_4flbx"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
+size = Vector2(40, 20)
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("player", "camera")]
+script = ExtResource("1_4flbx")
+player = NodePath("Pivot/Body")
+camera = NodePath("Camera")
+
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Body" type="Sprite2D" parent="Pivot"]
+position = Vector2(10, 0)
+texture = SubResource("PlaceholderTexture2D_pq8q7")
