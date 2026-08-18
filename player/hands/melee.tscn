@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://8h27cib33mgj"]
+
+[ext_resource type="Script" uid="uid://dmw6w5tbsd0u" path="res://player/hands/melee.gd" id="1_h1mv8"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_h1mv8"]
+size = Vector2(5, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5ashk"]
+size = Vector2(30, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78mm8"]
+size = Vector2(30, 6)
+
+[node name="Melee" type="Node2D"]
+script = ExtResource("1_h1mv8")
+damage = 1
+rotation_speed = 120.0
+maximum_rotation_angle = 30.0
+
+[node name="Handle" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+texture = SubResource("PlaceholderTexture2D_h1mv8")
+
+[node name="Head" type="Sprite2D" parent="."]
+position = Vector2(0, -30)
+texture = SubResource("PlaceholderTexture2D_5ashk")
+
+[node name="HeadArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HeadArea"]
+position = Vector2(0, -30)
+shape = SubResource("RectangleShape2D_78mm8")

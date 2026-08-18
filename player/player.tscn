@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cal1pb5kftete"]
+[gd_scene load_steps=7 format=3 uid="uid://cal1pb5kftete"]
 
 [ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player/player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://player/hand.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://player/hands/hand.gd" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://8h27cib33mgj" path="res://player/hands/melee.tscn" id="3_g1dw6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
 size = Vector2(40, 40)
@@ -34,6 +35,10 @@ rotation_speed = 30.0
 [node name="Hand1" type="Sprite2D" parent="Hands/Hand1_Pivot"]
 position = Vector2(-15, 0)
 texture = SubResource("PlaceholderTexture2D_i3pqv")
+
+[node name="Melee" parent="Hands" instance=ExtResource("3_g1dw6")]
+position = Vector2(13, -13)
+rotation = 0.785398
 
 [node name="PlayerCollider" type="Area2D" parent="."]
 

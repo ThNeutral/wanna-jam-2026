@@ -11,6 +11,14 @@ var received_damage: int = 0
 func current_health() -> int:
 	return total_health - received_damage
 
+func is_dead() -> bool:
+	return current_health() <= 0
+
+func receive_damage(damage: int):
+	received_damage += damage
+	if is_dead():
+		queue_free()
+
 func _ready() -> void:
 	area.area_entered.connect(_on_area_entered)
 	
