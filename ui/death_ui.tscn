@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dgkl57c4s0w13"]
 
-[ext_resource type="Script" uid="uid://c115f6hb7otfo" path="res://death_ui.gd" id="1_brogy"]
+[ext_resource type="Script" uid="uid://c115f6hb7otfo" path="res://ui/death_ui.gd" id="1_brogy"]
 
 [node name="DeathUI" type="Control" node_paths=PackedStringArray("button")]
 layout_mode = 3

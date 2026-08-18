@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cal1pb5kftete"]
 
-[ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://hand.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player/player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://player/hand.gd" id="2_onrkg"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
 size = Vector2(40, 40)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://e1otca1mxncu"]
 
-[ext_resource type="Script" uid="uid://d1eskeaet3wc8" path="res://item_selector.gd" id="1_0si3c"]
+[ext_resource type="Script" uid="uid://d1eskeaet3wc8" path="res://ui/item_selector_ui.gd" id="1_0si3c"]
 
 [node name="ItemSelection" type="Control" node_paths=PackedStringArray("container")]
 layout_mode = 3
