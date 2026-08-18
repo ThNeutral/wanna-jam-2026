@@ -9,7 +9,15 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D):
 	print_debug(area.name)
 	if area.name == "PlayerCollider":
-		item_selector.show_choice(["One", "Two", "Three"], _on_selected)
+		item_selector.show_choice(
+			["One", "Two", "Three"],
+			_on_selected,
+			_on_cancel
+		)
 
 func _on_selected(name: String):
 	print_debug("Selected", name)
+	queue_free()
+
+func _on_cancel():
+	queue_free()
