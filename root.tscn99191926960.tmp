@@ -13,12 +13,11 @@ size = Vector2(30, 30)
 
 [node name="Root" type="Node2D"]
 
-[node name="HandSpawner" parent="." node_paths=PackedStringArray("item_selector") instance=ExtResource("1_l8v81")]
+[node name="HandSpawner" parent="." instance=ExtResource("1_l8v81")]
 prefab = ExtResource("1_jnlp7")
 number_of_hands = 4
 minimal_distance = 25.0
 spawn_area = Rect2(-200, -200, 400, 400)
-item_selector = NodePath("../CanvasLayer/ItemSelection")
 
 [node name="Player" parent="." instance=ExtResource("1_pq8q7")]
 camera_speed = 75.0

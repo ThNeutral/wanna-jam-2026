@@ -3,7 +3,6 @@ extends Node2D
 
 @export var speed: float
 @export var player: Player
-@export var area: Area2D
 
 @export var damage: int
 @export var total_health: int
@@ -20,7 +19,7 @@ func receive_damage(damage: int):
 		queue_free()
 
 func _ready() -> void:
-	area.area_entered.connect(_on_area_entered)
+	$EnemyCollider.area_entered.connect(_on_area_entered)
 	
 func _on_area_entered(area: Area2D) -> void:
 	if area.name == "PlayerCollider":

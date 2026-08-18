@@ -1,3 +1,4 @@
+class_name Hand
 extends Node2D
 
 @export var allowed_rotation_angle: float

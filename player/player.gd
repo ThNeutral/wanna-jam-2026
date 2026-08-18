@@ -1,9 +1,6 @@
 class_name Player
 extends Node2D
 
-@export var player: Node2D
-@export var camera: Camera2D
-
 @export var camera_speed: float
 
 @export var total_health: int

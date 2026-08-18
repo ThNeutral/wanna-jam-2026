@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqjb6eito7un3"]
+
+[ext_resource type="Script" uid="uid://b1dxec8adt5w8" path="res://pickups/hand_spawner.gd" id="1_dlf0u"]
+
+[node name="HandSpawner" type="Node2D"]
+script = ExtResource("1_dlf0u")
