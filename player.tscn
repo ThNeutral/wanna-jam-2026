@@ -1,28 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://cal1pb5kftete"]
+[gd_scene load_steps=6 format=3 uid="uid://cal1pb5kftete"]
 
 [ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://hand.gd" id="2_onrkg"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
-size = Vector2(40, 20)
+size = Vector2(40, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i3pqv"]
+size = Vector2(40, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
-size = Vector2(40, 20)
+size = Vector2(40, 40)
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("1_4flbx")
-player = NodePath("Pivot/Body")
+player = NodePath("Body")
 camera = NodePath("Camera")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_pq8q7")
 
 [node name="Camera" type="Camera2D" parent="."]
 
-[node name="Pivot" type="Node2D" parent="."]
+[node name="Hands" type="Node2D" parent="."]
 
-[node name="Body" type="Sprite2D" parent="Pivot"]
-position = Vector2(10, 0)
-texture = SubResource("PlaceholderTexture2D_pq8q7")
+[node name="Hand1_Pivot" type="Node2D" parent="Hands"]
+position = Vector2(-10, -10)
+rotation = 0.785398
+script = ExtResource("2_onrkg")
+allowed_rotation_angle = 30.0
+rotation_speed = 30.0
+
+[node name="Hand1" type="Sprite2D" parent="Hands/Hand1_Pivot"]
+position = Vector2(-15, 0)
+texture = SubResource("PlaceholderTexture2D_i3pqv")
 
 [node name="PlayerCollider" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollider"]
-position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_4flbx")
