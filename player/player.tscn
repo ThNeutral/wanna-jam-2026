@@ -1,15 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cal1pb5kftete"]
+[gd_scene load_steps=5 format=3 uid="uid://cal1pb5kftete"]
 
 [ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player/player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://g5hma0tf1fo6" path="res://player/hands/hand.gd" id="2_onrkg"]
 [ext_resource type="PackedScene" uid="uid://neagvi0e7mr1" path="res://player/passives/area_attack.tscn" id="2_yw30f"]
-[ext_resource type="PackedScene" uid="uid://8h27cib33mgj" path="res://player/hands/melee.tscn" id="3_g1dw6"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
 size = Vector2(40, 40)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i3pqv"]
-size = Vector2(40, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
 size = Vector2(40, 40)
@@ -18,28 +13,43 @@ size = Vector2(40, 40)
 script = ExtResource("1_4flbx")
 
 [node name="AreaAttack" parent="." instance=ExtResource("2_yw30f")]
+radius = 100.0
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_pq8q7")
 
 [node name="Camera" type="Camera2D" parent="."]
 
-[node name="Hands" type="Node2D" parent="."]
+[node name="Mounts" type="Node2D" parent="."]
 
-[node name="Hand1_Pivot" type="Node2D" parent="Hands"]
+[node name="MountRT" type="Node2D" parent="Mounts"]
+position = Vector2(10, -10)
+rotation = 0.785398
+scale = Vector2(1, 1)
+
+[node name="MountLT" type="Node2D" parent="Mounts"]
 position = Vector2(-10, -10)
-rotation = 0.785398
-script = ExtResource("2_onrkg")
-allowed_rotation_angle = 30.0
-rotation_speed = 30.0
+rotation = 5.49779
+scale = Vector2(1, 1)
 
-[node name="Hand1" type="Sprite2D" parent="Hands/Hand1_Pivot"]
-position = Vector2(-15, 0)
-texture = SubResource("PlaceholderTexture2D_i3pqv")
+[node name="MountRB" type="Node2D" parent="Mounts"]
+position = Vector2(-10, 10)
+rotation = 3.92699
+scale = Vector2(1, 1)
 
-[node name="Melee" parent="Hands" instance=ExtResource("3_g1dw6")]
-position = Vector2(13, -13)
-rotation = 0.785398
+[node name="MountLB" type="Node2D" parent="Mounts"]
+position = Vector2(10, 10)
+rotation = 2.35619
+
+[node name="Passives" type="Node2D" parent="."]
+
+[node name="PassiveTop" type="Node2D" parent="Passives"]
+position = Vector2(0, -10)
+
+[node name="PassiveMiddle" type="Node2D" parent="Passives"]
+
+[node name="PassiveBottom" type="Node2D" parent="Passives"]
+position = Vector2(0, 10)
 
 [node name="PlayerCollider" type="Area2D" parent="."]
 

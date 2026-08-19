@@ -8,6 +8,19 @@ var received_damage: int = 0
 func _current_health() -> int:
 	return total_health - received_damage
 
+var handles: Array[Node2D] = []
+var passives: Array[Node2D] = []
+
+func _ready() -> void:
+	handles.append($Mounts/MountRT)
+	handles.append($Mounts/MountLT)
+	handles.append($Mounts/MountRB)
+	handles.append($Mounts/MountLB)
+	
+	passives.append($Passives/PassiveTop)
+	passives.append($Passives/PassiveMiddle)
+	passives.append($Passives/PassiveBottom)
+
 func is_dead() -> bool:
 	return _current_health() <= 0
 
@@ -31,3 +44,29 @@ func _handle_pan_camera(delta: float) -> void:
 			direction += pan_camera_controls[key]
 	
 	position += direction * camera_speed * delta
+
+func add_weapon(weapon: Node2D)-> void:
+	var handle = _get_empty_handle()
+	weapon.reparent(handle)
+	weapon.global_position = handle.global_position
+	weapon.active = true
+
+func add_passive(passive: Node2D) -> void:
+	var passive_slot = _get_empty_passive()
+	passive.reparent(passive_slot)
+	passive.global_position = passive_slot.global_position
+	passive.active = true
+
+func _get_empty_handle()-> Node2D:
+	for handle in handles:
+		if handle.get_child_count() == 0:
+			return handle
+	
+	return null
+
+func _get_empty_passive()-> Node2D:
+	for passive in passives:
+		if passive.get_child_count() == 0:
+			return passive
+	
+	return null

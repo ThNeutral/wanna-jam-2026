@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://boael5r4pptwp"]
+[gd_scene load_steps=10 format=3 uid="uid://boael5r4pptwp"]
 
-[ext_resource type="PackedScene" uid="uid://cxcf8ff8ea6ni" path="res://pickups/hand_pickup.tscn" id="1_jnlp7"]
 [ext_resource type="PackedScene" uid="uid://cqjb6eito7un3" path="res://pickups/hand_spawner.tscn" id="1_l8v81"]
 [ext_resource type="PackedScene" uid="uid://cal1pb5kftete" path="res://player/player.tscn" id="1_pq8q7"]
+[ext_resource type="PackedScene" uid="uid://neagvi0e7mr1" path="res://player/passives/area_attack.tscn" id="2_bf3um"]
 [ext_resource type="PackedScene" uid="uid://d0gataxv65jwy" path="res://enemy/enemy.tscn" id="2_pyidc"]
+[ext_resource type="PackedScene" uid="uid://8h27cib33mgj" path="res://player/hands/melee.tscn" id="3_huihk"]
 [ext_resource type="PackedScene" uid="uid://dta45l4si5xwx" path="res://enemy/enemy_spawner.tscn" id="3_vvh5c"]
 [ext_resource type="PackedScene" uid="uid://dgkl57c4s0w13" path="res://ui/death_ui.tscn" id="4_28aoi"]
 [ext_resource type="PackedScene" uid="uid://e1otca1mxncu" path="res://ui/item_selector_ui.tscn" id="6_l8v81"]
@@ -13,11 +14,12 @@ size = Vector2(30, 30)
 
 [node name="Root" type="Node2D"]
 
-[node name="HandSpawner" parent="." node_paths=PackedStringArray("item_selector") instance=ExtResource("1_l8v81")]
-prefab = ExtResource("1_jnlp7")
+[node name="HandSpawner" parent="." node_paths=PackedStringArray("player", "item_selector") instance=ExtResource("1_l8v81")]
+prefabs = Array[PackedScene]([ExtResource("2_bf3um"), ExtResource("3_huihk")])
 number_of_hands = 4
 minimal_distance = 25.0
 spawn_area = Rect2(-200, -200, 400, 400)
+player = NodePath("../Player")
 item_selector = NodePath("../CanvasLayer/ItemSelection")
 
 [node name="Player" parent="." instance=ExtResource("1_pq8q7")]

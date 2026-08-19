@@ -1,10 +1,11 @@
 extends Node2D
 
-@export var prefab: PackedScene
+@export var prefabs: Array[PackedScene]
 @export var number_of_hands: int
 @export var minimal_distance: float
 @export var spawn_area: Rect2
 
+@export var player: Player
 @export var item_selector: ItemSelector
 
 const NUMBER_OF_ATTEMPTS = 1000
@@ -15,16 +16,20 @@ func _ready() -> void:
 func _handle_spawn() -> void:
 	var spawned: Array[Vector2] = []
 	for i in number_of_hands:
-		var hand_pickup = prefab.instantiate() as HandPickup
+		var prefab = prefabs.pick_random()
+		var hand_pickup = prefab.instantiate()
 		for attempt in NUMBER_OF_ATTEMPTS:
 			var spawn_point_candidate = _sample_random_point_in_spawn_area()
 			if (!_is_point_allowed(spawn_point_candidate, spawned)):
 				assert(attempt != NUMBER_OF_ATTEMPTS - 1, "Failed to generate point.")
 				continue
 			
+			print_debug(hand_pickup)
+			
 			spawned.append(spawn_point_candidate)
 			hand_pickup.global_position = spawn_point_candidate
 			hand_pickup.item_selector = item_selector
+			hand_pickup.player = player
 			add_child(hand_pickup)
 			break
 

@@ -2,6 +2,8 @@ extends Node2D
 
 @export var damage: int
 
+var active: bool = false
+
 @export var rotation_speed: float
 @export var maximum_rotation_angle: float
 var initial_rotation: float
@@ -20,6 +22,9 @@ func _physics_process(delta: float) -> void:
 	_handle_rotation(delta)
 
 func _handle_rotation(delta: float) -> void:	
+	if not active:
+		return
+	
 	var t = 1.0 - exp(-deg_to_rad(rotation_speed) * delta)
 	var target = _maximum_rotation() if positive_direction else _minimal_rotation()
 	rotation = lerp_angle(
@@ -41,6 +46,9 @@ func _handle_flip_direction():
 		_on_area_entered(area)
 
 func _on_area_entered(area: Area2D) -> void:
+	if not active:
+		return
+	
 	if area.name == "EnemyCollider":
 		var enemy = area.get_parent() as Enemy
 		enemy.receive_damage(damage)

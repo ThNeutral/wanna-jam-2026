@@ -1,20 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxcf8ff8ea6ni"]
 
 [ext_resource type="Script" uid="uid://d3byngmvyvokm" path="res://pickups/hand_pickup.gd" id="1_u4p2i"]
+[ext_resource type="PackedScene" uid="uid://8h27cib33mgj" path="res://player/hands/melee.tscn" id="2_ep8q5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6wgf"]
-size = Vector2(10, 30)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q6wgf"]
 size = Vector2(10, 30)
 
 [node name="Hand" type="Node2D"]
 script = ExtResource("1_u4p2i")
 
+[node name="Weapon" parent="." instance=ExtResource("2_ep8q5")]
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_q6wgf")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_q6wgf")
