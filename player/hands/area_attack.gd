@@ -14,6 +14,9 @@ func _process(delta: float) -> void:
 	_handle_attack(delta)
 
 func _handle_attack(delta: float) -> void:
+	if not is_active:
+		return
+	
 	attack_counter += delta
 	
 	while attack_counter > attack_interval:

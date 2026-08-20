@@ -2,6 +2,10 @@ extends BaseWeapon
 
 @export var damage: int
 
+@export var attack_delay: float
+var attack_counter = 0
+var is_in_attack = false
+
 @export var rotation_speed: float
 @export var maximum_rotation_angle: float
 var initial_rotation: float
@@ -10,41 +14,58 @@ func _minimal_rotation() -> float:
 func _maximum_rotation() -> float:
 	return initial_rotation + deg_to_rad(maximum_rotation_angle)
 
-var flip_direction_handled = true
-var positive_direction = true
+func on_added(
+	initial_position: Vector2,
+	initial_rotation: float
+) -> void:
+	position = initial_position
+	initial_rotation = rotation
+	rotation = _minimal_rotation()
+	is_active = true
 
 func _ready() -> void:
-	initial_rotation = rotation
+	$HeadArea.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
 	_handle_rotation(delta)
 
 func _handle_rotation(delta: float) -> void:	
-	if not active:
+	if not is_active:
 		return
 	
+	if !is_in_attack:
+		attack_counter += delta
+	
+	if attack_counter < attack_delay:
+		return
+	
+	if !is_in_attack:
+		_handle_start_attack()
+	
 	var t = 1.0 - exp(-deg_to_rad(rotation_speed) * delta)
-	var target = _maximum_rotation() if positive_direction else _minimal_rotation()
+	var target = _maximum_rotation()
 	rotation = lerp_angle(
 		rotation,
 		target,
 		t
 	)
 	
-	if (positive_direction and abs(rotation - _maximum_rotation()) <= 1e-1):
-		positive_direction = false
-		_handle_flip_direction() 
-	elif (!positive_direction and abs(rotation - _minimal_rotation()) <= 1e-1):
-		positive_direction = true
-		_handle_flip_direction()
+	if abs(rotation - _maximum_rotation()) <= 1e-1:
+		_handle_end_attack()
 
-func _handle_flip_direction():
+func _handle_start_attack():
+	is_in_attack = true
 	var areas = $HeadArea.get_overlapping_areas()
 	for area in areas:
 		_on_area_entered(area)
 
+func _handle_end_attack():
+	is_in_attack = false
+	attack_counter = 0
+	rotation = _minimal_rotation()
+
 func _on_area_entered(area: Area2D) -> void:
-	if not active:
+	if not is_active or not is_in_attack:
 		return
 	
 	if area.name == "EnemyCollider":

@@ -60,9 +60,7 @@ func _handle_zoom_camera(delta: float) -> void:
 func add_weapon(weapon: BaseWeapon)-> void:
 	var handle = _get_empty_handle()
 	weapon.reparent(handle)
-	weapon.global_position = handle.global_position
-	weapon.rotation = 0
-	weapon.active = true
+	weapon.on_added(Vector2.ZERO, 0)
 
 func add_passive(passive: Node2D) -> void:
 	var passive_slot = _get_empty_passive()
