@@ -24,6 +24,7 @@ func on_added(
 	is_active = true
 
 func _ready() -> void:
+	$HeadArea.visible = false
 	$HeadArea.area_entered.connect(_on_area_entered)
 
 func _physics_process(delta: float) -> void:
@@ -55,12 +56,14 @@ func _handle_rotation(delta: float) -> void:
 
 func _handle_start_attack():
 	is_in_attack = true
+	$HeadArea.visible = true
 	var areas = $HeadArea.get_overlapping_areas()
 	for area in areas:
 		_on_area_entered(area)
 
 func _handle_end_attack():
 	is_in_attack = false
+	$HeadArea.visible = false
 	attack_counter = 0
 	rotation = _minimal_rotation()
 
