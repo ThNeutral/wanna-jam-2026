@@ -27,8 +27,8 @@ item_selector = NodePath("../CanvasLayer/ItemSelection")
 
 [node name="Player" parent="." instance=ExtResource("1_pq8q7")]
 speed = 100.0
-zoom = Vector2(2, 2)
-zoom_speed = 2.0
+zoom = Vector2(1, 4)
+zoom_step = 0.2
 total_health = 5
 
 [node name="Reference" type="Sprite2D" parent="."]

@@ -4,7 +4,7 @@ extends Node2D
 @export var speed: float
 
 @export var zoom: Vector2
-@export var zoom_speed: float 
+@export var zoom_step: float 
 
 @export var total_health: int
 var received_damage: int = 0
@@ -42,7 +42,6 @@ var pan_camera_controls: Dictionary[Key, Vector2] = {
 
 func _process(delta: float) -> void:
 	_handle_pan_camera(delta)
-	_handle_zoom_camera(delta)
 	
 func _handle_pan_camera(delta: float) -> void: 
 	var direction = Vector2.ZERO
@@ -52,10 +51,16 @@ func _handle_pan_camera(delta: float) -> void:
 	
 	position += direction * speed * delta
 
-func _handle_zoom_camera(delta: float) -> void:
-	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP)):
-		print_debug("up")
-	
+func _input(event):
+	if event is InputEventMouseButton:
+		var next_zoom = $Camera.zoom.x
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+			next_zoom = clamp(next_zoom - zoom_step, zoom.x, zoom.y)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			next_zoom = clamp(next_zoom + zoom_step, zoom.x, zoom.y)
+		print_debug($Camera.zoom)
+		$Camera.zoom = Vector2(next_zoom, next_zoom)
+		print_debug($Camera.zoom)
 
 func add_weapon(weapon: BaseWeapon)-> void:
 	var handle = _get_empty_handle()
