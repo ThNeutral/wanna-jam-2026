@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dljxsmcujwdvc"]
+
+[ext_resource type="Script" uid="uid://dyoborv1n20fx" path="res://player/hands/rapid_fire.gd" id="1_fxgx7"]
+[ext_resource type="Script" uid="uid://dqg8ok7s2tdss" path="res://player/hands/bullet.gd" id="2_qn445"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fxgx7"]
+size = Vector2(30, 4)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qn445"]
+size = Vector2(10, 3)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rnj82"]
+size = Vector2(2, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qn445"]
+size = Vector2(2, 2)
+
+[node name="RapidFire" type="Node2D"]
+script = ExtResource("1_fxgx7")
+bullet_speed = 300.0
+shoot_delay = 0.1
+damage = 1
+spread_degrees = 10.0
+rotation_speed_degrees = 90.0
+
+[node name="BarrelStart" type="Node2D" parent="."]
+position = Vector2(-13, -4)
+
+[node name="BarrelEnd" type="Node2D" parent="."]
+position = Vector2(21, -4)
+
+[node name="Barrel" type="Sprite2D" parent="."]
+position = Vector2(4, -4)
+texture = SubResource("PlaceholderTexture2D_fxgx7")
+
+[node name="Handle" type="Sprite2D" parent="."]
+rotation = 2.35619
+texture = SubResource("PlaceholderTexture2D_qn445")
+
+[node name="Bullet" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("PlaceholderTexture2D_rnj82")
+script = ExtResource("2_qn445")
+
+[node name="BulletCollider" type="Area2D" parent="Bullet"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet/BulletCollider"]
+shape = SubResource("RectangleShape2D_qn445")
