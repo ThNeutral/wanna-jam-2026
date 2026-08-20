@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://b04kclh8s2bud"]
+
+[ext_resource type="Script" uid="uid://d1twpo10ox22g" path="res://player/hands/drone_carrier.gd" id="1_tmtrm"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1nvuv"]
+size = Vector2(5, 15)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tmtrm"]
+size = Vector2(15, 5)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jr41a"]
+size = Vector2(10, 10)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4qof8"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmds7"]
+
+[node name="DroneCarrier" type="Node2D"]
+script = ExtResource("1_tmtrm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 0.785398
+texture = SubResource("PlaceholderTexture2D_1nvuv")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+rotation = 0.785398
+texture = SubResource("PlaceholderTexture2D_tmtrm")
+
+[node name="Drone2" type="Node2D" parent="."]
+position = Vector2(40, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Drone2"]
+position = Vector2(-3, 3)
+texture = SubResource("PlaceholderTexture2D_jr41a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Drone2"]
+position = Vector2(3, -3)
+texture = SubResource("PlaceholderTexture2D_4qof8")
+
+[node name="DroneCollider" type="Area2D" parent="Drone2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drone2/DroneCollider"]
+shape = SubResource("RectangleShape2D_hmds7")
+
+[node name="Drone" type="Node2D" parent="."]
+position = Vector2(-40, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Drone"]
+position = Vector2(-3, 3)
+texture = SubResource("PlaceholderTexture2D_jr41a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Drone"]
+position = Vector2(3, -3)
+texture = SubResource("PlaceholderTexture2D_4qof8")
+
+[node name="DroneCollider" type="Area2D" parent="Drone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drone/DroneCollider"]
+shape = SubResource("RectangleShape2D_hmds7")
