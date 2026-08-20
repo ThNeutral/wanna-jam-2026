@@ -1,7 +1,10 @@
 class_name Player
 extends Node2D
 
-@export var camera_speed: float
+@export var speed: float
+
+@export var zoom: Vector2
+@export var zoom_speed: float 
 
 @export var total_health: int
 var received_damage: int = 0
@@ -12,6 +15,9 @@ var handles: Array[Node2D] = []
 var passives: Array[Node2D] = []
 
 func _ready() -> void:
+	var current_zoom = sqrt(zoom.x + zoom.y)
+	$Camera.zoom = Vector2(current_zoom, current_zoom)
+	
 	handles.append($Mounts/MountRT)
 	handles.append($Mounts/MountLT)
 	handles.append($Mounts/MountRB)
@@ -36,6 +42,7 @@ var pan_camera_controls: Dictionary[Key, Vector2] = {
 
 func _process(delta: float) -> void:
 	_handle_pan_camera(delta)
+	_handle_zoom_camera(delta)
 	
 func _handle_pan_camera(delta: float) -> void: 
 	var direction = Vector2.ZERO
@@ -43,12 +50,18 @@ func _handle_pan_camera(delta: float) -> void:
 		if Input.is_key_pressed(key as Key):
 			direction += pan_camera_controls[key]
 	
-	position += direction * camera_speed * delta
+	position += direction * speed * delta
 
-func add_weapon(weapon: Node2D)-> void:
+func _handle_zoom_camera(delta: float) -> void:
+	if (Input.is_mouse_button_pressed(MOUSE_BUTTON_WHEEL_UP)):
+		print_debug("up")
+	
+
+func add_weapon(weapon: BaseWeapon)-> void:
 	var handle = _get_empty_handle()
 	weapon.reparent(handle)
 	weapon.global_position = handle.global_position
+	weapon.rotation = 0
 	weapon.active = true
 
 func add_passive(passive: Node2D) -> void:

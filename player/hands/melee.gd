@@ -1,8 +1,6 @@
-extends Node2D
+extends BaseWeapon
 
 @export var damage: int
-
-var active: bool = false
 
 @export var rotation_speed: float
 @export var maximum_rotation_angle: float

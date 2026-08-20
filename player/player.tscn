@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cal1pb5kftete"]
+[gd_scene load_steps=4 format=3 uid="uid://cal1pb5kftete"]
 
 [ext_resource type="Script" uid="uid://mehnnew0ulon" path="res://player/player.gd" id="1_4flbx"]
-[ext_resource type="PackedScene" uid="uid://neagvi0e7mr1" path="res://player/passives/area_attack.tscn" id="2_yw30f"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pq8q7"]
 size = Vector2(40, 40)
@@ -11,9 +10,6 @@ size = Vector2(40, 40)
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_4flbx")
-
-[node name="AreaAttack" parent="." instance=ExtResource("2_yw30f")]
-radius = 100.0
 
 [node name="Body" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_pq8q7")
@@ -25,17 +21,14 @@ texture = SubResource("PlaceholderTexture2D_pq8q7")
 [node name="MountRT" type="Node2D" parent="Mounts"]
 position = Vector2(10, -10)
 rotation = 0.785398
-scale = Vector2(1, 1)
 
 [node name="MountLT" type="Node2D" parent="Mounts"]
 position = Vector2(-10, -10)
 rotation = 5.49779
-scale = Vector2(1, 1)
 
 [node name="MountRB" type="Node2D" parent="Mounts"]
 position = Vector2(-10, 10)
 rotation = 3.92699
-scale = Vector2(1, 1)
 
 [node name="MountLB" type="Node2D" parent="Mounts"]
 position = Vector2(10, 10)

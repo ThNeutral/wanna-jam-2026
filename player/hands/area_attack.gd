@@ -1,4 +1,4 @@
-extends Node2D
+extends BaseWeapon
 
 @export var radius: float
 @export var attack_interval: float
