@@ -1,7 +1,9 @@
 class_name BaseWeapon
 extends Node2D
 
-var is_active = false
+var _is_active = false
+func set_is_active(new_value: bool) -> void:
+	_is_active = new_value
 
 func on_added(
 	initial_position: Vector2,

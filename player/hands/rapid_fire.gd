@@ -15,14 +15,14 @@ func on_added(
 ) -> void:
 	position = initial_position
 	initial_rotation = rotation
-	is_active = true
+	set_is_active(true)
 
 func _process(delta: float) -> void:
 	_handle_fire(delta)
 	_handle_rotate(delta)
 
 func _handle_rotate(delta: float) -> void:
-	if not is_active:
+	if not _is_active:
 		return
 	
 	var direction = _direction_to_cursor($BarrelEnd.global_position)
@@ -36,7 +36,7 @@ func _handle_rotate(delta: float) -> void:
 	)
 
 func _handle_fire(delta: float) -> void:
-	if not is_active:
+	if not _is_active:
 		return
 	
 	shoot_counter += delta
