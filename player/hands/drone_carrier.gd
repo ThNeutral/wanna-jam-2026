@@ -3,6 +3,10 @@ extends BaseWeapon
 @export var rotation_speed_degrees: float
 @export var damage: int
 
+func set_is_active(new_value: bool) -> void:
+	_is_active = new_value
+	$Drones.visible = new_value
+
 func on_added(
 	initial_position: Vector2,
 	initial_rotation: float

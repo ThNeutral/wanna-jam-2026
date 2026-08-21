@@ -30,6 +30,7 @@ rotation = 0.785398
 texture = SubResource("PlaceholderTexture2D_tmtrm")
 
 [node name="Drones" type="Node2D" parent="."]
+visible = false
 
 [node name="Drone1" type="Node2D" parent="Drones"]
 position = Vector2(-40, 0)
