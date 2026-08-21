@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cu16fiharr3fi"]
+
+[ext_resource type="Script" uid="uid://ubk4mfhn6dbt" path="res://player/hands/laser.gd" id="1_14wyt"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cbmcf"]
+size = Vector2(10, 3)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gyw6j"]
+size = Vector2(20, 4)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_d6nfm"]
+size = Vector2(2000, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5mc0p"]
+size = Vector2(2000, 2)
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("1_14wyt")
+damage = 1
+rotation_speed_degrees = 30.0
+shoot_delay = 0.2
+shoot_length = 0.1
+
+[node name="Handle" type="Sprite2D" parent="."]
+rotation = -0.785398
+texture = SubResource("PlaceholderTexture2D_cbmcf")
+
+[node name="Source" type="Sprite2D" parent="."]
+position = Vector2(-4, -5)
+texture = SubResource("PlaceholderTexture2D_gyw6j")
+
+[node name="TopRail" type="Sprite2D" parent="."]
+position = Vector2(13, -1)
+texture = SubResource("PlaceholderTexture2D_gyw6j")
+
+[node name="LeftRail" type="Sprite2D" parent="."]
+position = Vector2(13, -9)
+texture = SubResource("PlaceholderTexture2D_gyw6j")
+
+[node name="RayStart" type="Node2D" parent="."]
+position = Vector2(7, -5)
+
+[node name="Ray" type="Sprite2D" parent="."]
+visible = false
+
+[node name="RaySprite" type="Sprite2D" parent="Ray"]
+position = Vector2(1007, -5)
+texture = SubResource("PlaceholderTexture2D_d6nfm")
+
+[node name="RayCollider" type="Area2D" parent="Ray"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ray/RayCollider"]
+position = Vector2(1007, -5)
+shape = SubResource("RectangleShape2D_5mc0p")

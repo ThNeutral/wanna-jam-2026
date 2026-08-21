@@ -14,7 +14,6 @@ func on_added(
 	initial_rotation: float
 ) -> void:
 	position = initial_position
-	initial_rotation = rotation
 	set_is_active(true)
 
 func _process(delta: float) -> void:
@@ -28,7 +27,6 @@ func _handle_rotate(delta: float) -> void:
 	var direction = _direction_to_cursor($BarrelEnd.global_position)
 	var t = 1.0 - exp(-deg_to_rad(rotation_speed_degrees) * delta)
 	var target = direction.angle()
-	print_debug("current", rad_to_deg(rotation), "target", rad_to_deg(target))
 	global_rotation = lerp_angle(
 		global_rotation,
 		target,
