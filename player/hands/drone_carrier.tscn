@@ -18,6 +18,8 @@ size = Vector2(10, 10)
 
 [node name="DroneCarrier" type="Node2D"]
 script = ExtResource("1_tmtrm")
+rotation_speed_degrees = 120.0
+damage = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 0.785398
@@ -27,34 +29,36 @@ texture = SubResource("PlaceholderTexture2D_1nvuv")
 rotation = 0.785398
 texture = SubResource("PlaceholderTexture2D_tmtrm")
 
-[node name="Drone2" type="Node2D" parent="."]
-position = Vector2(40, 0)
+[node name="Drones" type="Node2D" parent="."]
 
-[node name="Sprite2D3" type="Sprite2D" parent="Drone2"]
-position = Vector2(-3, 3)
-texture = SubResource("PlaceholderTexture2D_jr41a")
-
-[node name="Sprite2D" type="Sprite2D" parent="Drone2"]
-position = Vector2(3, -3)
-texture = SubResource("PlaceholderTexture2D_4qof8")
-
-[node name="DroneCollider" type="Area2D" parent="Drone2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Drone2/DroneCollider"]
-shape = SubResource("RectangleShape2D_hmds7")
-
-[node name="Drone" type="Node2D" parent="."]
+[node name="Drone1" type="Node2D" parent="Drones"]
 position = Vector2(-40, 0)
 
-[node name="Sprite2D3" type="Sprite2D" parent="Drone"]
+[node name="Sprite2D3" type="Sprite2D" parent="Drones/Drone1"]
 position = Vector2(-3, 3)
 texture = SubResource("PlaceholderTexture2D_jr41a")
 
-[node name="Sprite2D" type="Sprite2D" parent="Drone"]
+[node name="Sprite2D" type="Sprite2D" parent="Drones/Drone1"]
 position = Vector2(3, -3)
 texture = SubResource("PlaceholderTexture2D_4qof8")
 
-[node name="DroneCollider" type="Area2D" parent="Drone"]
+[node name="DroneCollider" type="Area2D" parent="Drones/Drone1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Drone/DroneCollider"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drones/Drone1/DroneCollider"]
+shape = SubResource("RectangleShape2D_hmds7")
+
+[node name="Drone2" type="Node2D" parent="Drones"]
+position = Vector2(40, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Drones/Drone2"]
+position = Vector2(-3, 3)
+texture = SubResource("PlaceholderTexture2D_jr41a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Drones/Drone2"]
+position = Vector2(3, -3)
+texture = SubResource("PlaceholderTexture2D_4qof8")
+
+[node name="DroneCollider" type="Area2D" parent="Drones/Drone2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drones/Drone2/DroneCollider"]
 shape = SubResource("RectangleShape2D_hmds7")

@@ -9,7 +9,7 @@ func on_added(
 	initial_position: Vector2,
 	initial_rotation: float
 ) -> void:
-	pass
+	assert(false, "on_added was not overwritten")
 
 func _direction_to_cursor(pos = global_position) -> Vector2:
 	return (get_global_mouse_position() - pos).normalized()

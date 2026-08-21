@@ -55,9 +55,9 @@ func _input(event):
 	if event is InputEventMouseButton:
 		var next_zoom = $Camera.zoom.x
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			next_zoom = clamp(next_zoom - zoom_step, zoom.x, zoom.y)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			next_zoom = clamp(next_zoom + zoom_step, zoom.x, zoom.y)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			next_zoom = clamp(next_zoom - zoom_step, zoom.x, zoom.y)
 		$Camera.zoom = Vector2(next_zoom, next_zoom)
 
 func add_weapon(weapon: BaseWeapon)-> void:

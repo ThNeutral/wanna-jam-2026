@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://boael5r4pptwp"]
+[gd_scene load_steps=13 format=3 uid="uid://boael5r4pptwp"]
 
 [ext_resource type="PackedScene" uid="uid://cxcf8ff8ea6ni" path="res://pickups/hand_pickup.tscn" id="1_jnlp7"]
 [ext_resource type="PackedScene" uid="uid://cqjb6eito7un3" path="res://pickups/hand_spawner.tscn" id="1_l8v81"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dta45l4si5xwx" path="res://enemy/enemy_spawner.tscn" id="3_vvh5c"]
 [ext_resource type="PackedScene" uid="uid://dgkl57c4s0w13" path="res://ui/death_ui.tscn" id="4_28aoi"]
 [ext_resource type="PackedScene" uid="uid://dljxsmcujwdvc" path="res://player/hands/rapid_fire.tscn" id="5_tw3kd"]
+[ext_resource type="PackedScene" uid="uid://b04kclh8s2bud" path="res://player/hands/drone_carrier.tscn" id="6_gd4vy"]
 [ext_resource type="PackedScene" uid="uid://e1otca1mxncu" path="res://ui/item_selector_ui.tscn" id="6_l8v81"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pyidc"]
@@ -18,7 +19,7 @@ size = Vector2(30, 30)
 
 [node name="HandSpawner" parent="." node_paths=PackedStringArray("player", "item_selector") instance=ExtResource("1_l8v81")]
 hand_pickup_prefab = ExtResource("1_jnlp7")
-weapons = Array[PackedScene]([ExtResource("3_tw3kd"), ExtResource("3_huihk"), ExtResource("5_tw3kd")])
+weapons = Array[PackedScene]([ExtResource("3_tw3kd"), ExtResource("3_huihk"), ExtResource("5_tw3kd"), ExtResource("6_gd4vy")])
 number_of_hands = 10
 minimal_distance = 100.0
 spawn_area = Rect2(-500, -500, 1000, 1000)
