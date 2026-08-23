@@ -6,6 +6,8 @@ extends Node2D
 @export var zoom: Vector2
 @export var zoom_step: float 
 
+var shield: int
+
 @export var total_health: int
 var received_damage: int = 0
 func _current_health() -> int:
@@ -23,14 +25,18 @@ func _ready() -> void:
 	handles.append($Mounts/MountRB)
 	handles.append($Mounts/MountLB)
 	
-	passives.append($Passives/PassiveTop)
-	passives.append($Passives/PassiveMiddle)
-	passives.append($Passives/PassiveBottom)
+	passives.append($Multiparts/MultipartTop)
+	passives.append($Multiparts/MultipartMiddle)
+	passives.append($Multiparts/MultipartBottom)
 
 func is_dead() -> bool:
 	return _current_health() <= 0
 
 func receive_damage(damage: int):
+	if shield > 0:
+		shield = max(0, shield - damage)
+		return
+	
 	received_damage += damage
 
 var pan_camera_controls: Dictionary[Key, Vector2] = {
@@ -61,9 +67,12 @@ func _input(event):
 		$Camera.zoom = Vector2(next_zoom, next_zoom)
 
 func add_weapon(weapon: BaseWeapon)-> void:
-	var handle = _get_empty_handle()
+	var index = _get_empty_handle_index()
+	assert(index != -1, "No more handles left")
+	var handle = handles[index]
 	weapon.reparent(handle)
 	weapon.on_added(Vector2.ZERO, 0)
+	weapon.set_index(index)
 
 func add_passive(passive: Node2D) -> void:
 	var passive_slot = _get_empty_passive()
@@ -71,12 +80,13 @@ func add_passive(passive: Node2D) -> void:
 	passive.global_position = passive_slot.global_position
 	passive.active = true
 
-func _get_empty_handle()-> Node2D:
-	for handle in handles:
+func _get_empty_handle_index() -> int:
+	for index in handles.size():
+		var handle = handles[index]
 		if handle.get_child_count() == 0:
-			return handle
+			return index
 	
-	return null
+	return -1
 
 func _get_empty_passive()-> Node2D:
 	for passive in passives:

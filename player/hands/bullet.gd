@@ -8,6 +8,8 @@ var direction: Vector2
 const MAXIMUM_TRAVEL_DISTANCE: float = 10000
 var travelled: float
 
+var overpenetration: bool = false
+
 func _ready() -> void:
 	$BulletCollider.area_entered.connect(_on_area_entered)
 
@@ -24,4 +26,5 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.name == "EnemyCollider":
 		var enemy = area.get_parent() as Enemy
 		enemy.receive_damage(damage)
-		queue_free()
+		if not overpenetration:
+			queue_free()

@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://boael5r4pptwp"]
+[gd_scene load_steps=15 format=3 uid="uid://boael5r4pptwp"]
 
+[ext_resource type="PackedScene" uid="uid://dfc8neew5bbt8" path="res://background/map.tscn" id="1_eji0w"]
 [ext_resource type="PackedScene" uid="uid://cxcf8ff8ea6ni" path="res://pickups/hand_pickup.tscn" id="1_jnlp7"]
 [ext_resource type="PackedScene" uid="uid://cqjb6eito7un3" path="res://pickups/hand_spawner.tscn" id="1_l8v81"]
 [ext_resource type="PackedScene" uid="uid://cal1pb5kftete" path="res://player/player.tscn" id="1_pq8q7"]
@@ -18,6 +19,8 @@ size = Vector2(30, 30)
 
 [node name="Root" type="Node2D"]
 
+[node name="Map" parent="." instance=ExtResource("1_eji0w")]
+
 [node name="HandSpawner" parent="." node_paths=PackedStringArray("player", "item_selector") instance=ExtResource("1_l8v81")]
 hand_pickup_prefab = ExtResource("1_jnlp7")
 weapons = Array[PackedScene]([ExtResource("3_tw3kd"), ExtResource("3_huihk"), ExtResource("5_tw3kd"), ExtResource("6_gd4vy"), ExtResource("7_qw60f")])
@@ -29,8 +32,8 @@ item_selector = NodePath("../CanvasLayer/ItemSelection")
 
 [node name="Player" parent="." instance=ExtResource("1_pq8q7")]
 speed = 100.0
-zoom = Vector2(1, 4)
-zoom_step = 0.2
+zoom = Vector2(0.1, 5)
+zoom_step = 0.1
 total_health = 5
 
 [node name="Reference" type="Sprite2D" parent="."]

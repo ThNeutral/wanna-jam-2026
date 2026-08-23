@@ -16,7 +16,8 @@ script = ExtResource("1_h1mv8")
 damage = 1
 attack_delay = 1.0
 rotation_speed = 120.0
-maximum_rotation_angle = 30.0
+attack_length = 0.5
+maximum_rotation_angle = 60.0
 
 [node name="Handle" type="Sprite2D" parent="."]
 position = Vector2(0, -10)
@@ -32,3 +33,6 @@ texture = SubResource("PlaceholderTexture2D_5ashk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HeadArea"]
 position = Vector2(0, -59.75)
 shape = SubResource("RectangleShape2D_78mm8")
+
+[node name="HandleEnd" type="Node2D" parent="."]
+position = Vector2(0, -35)

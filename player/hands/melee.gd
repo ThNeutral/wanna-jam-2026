@@ -7,6 +7,9 @@ var attack_counter = 0
 var _is_in_attack = false
 
 @export var rotation_speed: float
+@export var attack_length: float
+var attack_length_counter: float
+
 @export var maximum_rotation_angle: float
 var initial_rotation: float
 func _minimal_rotation() -> float:
@@ -27,6 +30,9 @@ func _ready() -> void:
 	$HeadArea.visible = false
 	$HeadArea.area_entered.connect(_on_area_entered)
 
+func _process(delta: float) -> void:
+	_handle_rotate_to_mouse(delta)
+
 func _physics_process(delta: float) -> void:
 	_handle_rotation(delta)
 
@@ -43,7 +49,8 @@ func _handle_rotation(delta: float) -> void:
 	if not _is_in_attack:
 		_handle_start_attack()
 	
-	var t = 1.0 - exp(-deg_to_rad(rotation_speed) * delta)
+	attack_length_counter += delta
+	var t = min(1.0, 1.0 - (attack_length - attack_length_counter) / attack_length)
 	var target = _maximum_rotation()
 	rotation = lerp_angle(
 		rotation,
@@ -51,10 +58,11 @@ func _handle_rotation(delta: float) -> void:
 		t
 	)
 	
-	if abs(rotation - _maximum_rotation()) <= 1e-1:
+	if t == 1.0:
 		_handle_end_attack()
 
 func _handle_start_attack():
+	rotation = _minimal_rotation()
 	_is_in_attack = true
 	$HeadArea.visible = true
 	var areas = $HeadArea.get_overlapping_areas()
@@ -65,7 +73,22 @@ func _handle_end_attack():
 	_is_in_attack = false
 	$HeadArea.visible = false
 	attack_counter = 0
-	rotation = _minimal_rotation()
+	attack_length_counter = 0
+	rotation = initial_rotation
+
+func _handle_rotate_to_mouse(delta: float) -> void:
+	if not _is_active or _is_in_attack:
+		return
+	
+	var direction = _direction_to_cursor($HandleEnd.global_position)
+	var t = 1.0 - exp(-deg_to_rad(rotation_speed) * delta)
+	var target = direction.angle() + deg_to_rad(maximum_rotation_angle)
+	rotation = lerp_angle(
+		rotation,
+		target,
+		t
+	)
+	initial_rotation = rotation
 
 func _on_area_entered(area: Area2D) -> void:
 	if not _is_active or not _is_in_attack:

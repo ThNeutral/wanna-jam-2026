@@ -34,14 +34,14 @@ rotation = 3.92699
 position = Vector2(10, 10)
 rotation = 2.35619
 
-[node name="Passives" type="Node2D" parent="."]
+[node name="Multiparts" type="Node2D" parent="."]
 
-[node name="PassiveTop" type="Node2D" parent="Passives"]
+[node name="MultipartTop" type="Node2D" parent="Multiparts"]
 position = Vector2(0, -10)
 
-[node name="PassiveMiddle" type="Node2D" parent="Passives"]
+[node name="MultipartMiddle" type="Node2D" parent="Multiparts"]
 
-[node name="PassiveBottom" type="Node2D" parent="Passives"]
+[node name="MultipartBottom" type="Node2D" parent="Multiparts"]
 position = Vector2(0, 10)
 
 [node name="PlayerCollider" type="Area2D" parent="."]

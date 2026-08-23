@@ -21,7 +21,6 @@ damage = Vector2(1, 2)
 scale_ray = 2.0
 shoot_delay = 0.2
 shoot_length = 0.1
-super_length = 1.0
 
 [node name="Handle" type="Sprite2D" parent="."]
 rotation = -0.785398
@@ -43,6 +42,7 @@ texture = SubResource("PlaceholderTexture2D_gyw6j")
 position = Vector2(7, -5)
 
 [node name="Ray" type="Sprite2D" parent="."]
+visible = false
 
 [node name="RaySprite" type="Sprite2D" parent="Ray"]
 position = Vector2(1007, -5)
