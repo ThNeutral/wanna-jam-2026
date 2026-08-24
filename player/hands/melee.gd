@@ -10,12 +10,17 @@ var _is_in_attack = false
 @export var attack_length: float
 var attack_length_counter: float
 
+var is_in_super: bool = false
+
 @export var maximum_rotation_angle: float
 var initial_rotation: float
 func _minimal_rotation() -> float:
 	return initial_rotation - deg_to_rad(maximum_rotation_angle)
 func _maximum_rotation() -> float:
 	return initial_rotation + deg_to_rad(maximum_rotation_angle)
+
+@export var super_length: float
+var super_length_counter: float
 
 func on_added(
 	initial_position: Vector2,
@@ -31,13 +36,14 @@ func _ready() -> void:
 	$HeadArea.area_entered.connect(_on_area_entered)
 
 func _process(delta: float) -> void:
+	super._process(delta)
 	_handle_rotate_to_mouse(delta)
 
 func _physics_process(delta: float) -> void:
 	_handle_rotation(delta)
 
 func _handle_rotation(delta: float) -> void:	
-	if not _is_active:
+	if not _is_active or is_in_super:
 		return
 	
 	if not _is_in_attack:
@@ -77,7 +83,7 @@ func _handle_end_attack():
 	rotation = initial_rotation
 
 func _handle_rotate_to_mouse(delta: float) -> void:
-	if not _is_active or _is_in_attack:
+	if not _is_active or _is_in_attack or is_in_super:
 		return
 	
 	var direction = _direction_to_cursor($HandleEnd.global_position)
@@ -89,6 +95,22 @@ func _handle_rotate_to_mouse(delta: float) -> void:
 		t
 	)
 	initial_rotation = rotation
+
+func _handle_rotate_super(delta: float) -> void:
+	if not _is_active or not _is_in_attack or not is_in_super:
+		return
+	
+	super_length_counter += delta
+	var t = 1.0 - (super_length - super_length_counter) / super_length
+	var target = initial_rotation + 2 * PI
+	rotation = lerp_angle(
+		rotation,
+		target,
+		t
+	)
+	
+func _invoke_super() -> void:
+	is_in_super = true
 
 func _on_area_entered(area: Area2D) -> void:
 	if not _is_active or not _is_in_attack:
