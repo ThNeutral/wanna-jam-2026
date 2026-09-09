@@ -43,14 +43,15 @@ func _handle_attack(delta: float) -> void:
 	if not _is_active:
 		return
 	
+	var attack_delta := _attack_delta(delta)
 	if not _is_in_attack:
-		_attack_counter += delta
+		_attack_counter += attack_delta
 		if _attack_counter < attack_delay:
 			return
 		
 		_start_attack()
 	
-	_attack_length_counter += delta
+	_attack_length_counter += attack_delta
 	var t := clampf(_attack_length_counter / attack_length, 0.0, 1.0) if attack_length > 0.0 else 1.0
 	rotation = lerp_angle(rotation, _maximum_rotation(), t)
 	

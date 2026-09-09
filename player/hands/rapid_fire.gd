@@ -27,7 +27,7 @@ func _handle_simple_fire(delta: float) -> void:
 	if not _is_active or is_in_super or shoot_delay <= 0.0:
 		return
 	
-	_shoot_counter += delta
+	_shoot_counter += _attack_delta(delta)
 	while _shoot_counter > shoot_delay:
 		_shoot_counter -= shoot_delay
 		_shoot_simple_bullet()

@@ -13,8 +13,11 @@ signal died
 
 var shield: int
 var received_damage: int = 0
+var attack_speed_multiplier: float = 1.0
+var speed_multiplier: float = 1.0
 
 var _handles: Array[Node2D] = []
+var _passives: Dictionary[BasePassive.Slot, Node2D] = {}
 var _camera: Camera2D
 
 func _ready() -> void:
@@ -24,8 +27,15 @@ func _ready() -> void:
 	_handles.append($Mounts/MountLT)
 	_handles.append($Mounts/MountRB)
 	_handles.append($Mounts/MountLB)
-	
+
+	_passives[BasePassive.Slot.TOP] = $Passives/PassiveTop
+	_passives[BasePassive.Slot.MIDDLE] = $Passives/PassiveMiddle
+	_passives[BasePassive.Slot.BOTTOM] = $Passives/PassiveBottom
+
 	_set_zoom(initial_zoom)
+
+func attack_delta(delta: float) -> float:
+	return delta * attack_speed_multiplier
 
 func current_health() -> int:
 	return total_health - received_damage
@@ -53,8 +63,20 @@ func add_weapon(weapon: BaseWeapon) -> bool:
 	weapon.reparent(_handles[index])
 	weapon.position = Vector2.ZERO
 	weapon.rotation = 0.0
+	weapon.player = self
 	weapon.set_index(index)
 	weapon.on_added()
+	return true
+
+func add_passive(passive: BasePassive) -> bool:
+	if not _is_passive_slot_available(passive.slot):
+		push_warning("Tried to add passive to taken slot %s" % passive.slot)
+		return false
+	
+	passive.reparent(_passives[passive.slot])
+	passive.position = Vector2.ZERO
+	passive.rotation = 0.0
+	passive.on_added(self)
 	return true
 
 func _process(delta: float) -> void:
@@ -74,11 +96,31 @@ func _handle_pan_camera(delta: float) -> void:
 	var direction := Input.get_vector(
 		&"move_left", &"move_right", &"move_up", &"move_down"
 	)
-	position += direction * speed * delta
+	position += direction * speed * speed_multiplier * delta
+
+func get_empty_passive_slots() -> Array[BasePassive.Slot]:
+	var empty_slots: Array[BasePassive.Slot] = []
+	for slot in BasePassive.Slot.keys():
+		if _is_passive_slot_available(slot):
+			empty_slots.append(slot)
+
+	return empty_slots
+
+func get_all_passive_slots() -> Array[BasePassive.Slot]:
+	return BasePassive.Slot.keys()
 
 func _get_empty_handle_index() -> int:
-	for index in _handles.size():
-		if _handles[index].get_child_count() == 0:
+	return _find_node_with_no_child(_handles)
+
+func _is_passive_slot_available(slot: BasePassive.Slot) -> bool:
+	return _has_no_children(_passives[slot])
+
+func _find_node_with_no_child(arr: Array[Node2D]) -> int:
+	for index in arr.size():
+		if _has_no_children(arr[index]):
 			return index
 	
 	return -1
+
+func _has_no_children(node: Node2D) -> bool:
+	return node.get_child_count() == 0

@@ -3,7 +3,7 @@ extends Control
 
 const PAUSE_HOLDER: StringName = &"item_selector"
 
-@export var container: VBoxContainer
+@onready var container: VBoxContainer = $VBoxContainer
 
 var _is_showing: bool = false
 var _on_cancel: Callable

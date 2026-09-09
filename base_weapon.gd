@@ -12,6 +12,7 @@ const SUPER_ACTIONS: Array[StringName] = [
 @export var super_cooldown: float = 3.0
 @export var super_length: float = 1.0
 
+var player: Player
 var index: int = -1
 var is_in_super: bool = false
 
@@ -40,6 +41,9 @@ func _process(delta: float) -> void:
 
 func _update(_delta: float) -> void:
 	pass
+
+func _attack_delta(delta: float) -> float:
+	return player.attack_delta(delta) if player != null else delta
 
 func _direction_to_cursor(from: Vector2 = global_position) -> Vector2:
 	return from.direction_to(get_global_mouse_position())

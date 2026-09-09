@@ -1,10 +1,13 @@
-extends BaseWeapon
+extends BasePassive
 
 @export var radius: float
 @export var attack_interval: float
 @export var damage: int
 
 var _attack_counter: float
+
+func _init() -> void:
+	slot = Slot.MIDDLE
 
 func set_is_active(new_value: bool) -> void:
 	_is_active = new_value
@@ -23,7 +26,7 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, radius, Color.BLACK, false, 5)
 
 func _update(delta: float) -> void:
-	_handle_attack(delta)
+	_handle_attack(_attack_delta(delta))
 
 func _handle_attack(delta: float) -> void:
 	if not _is_active or attack_interval <= 0.0:

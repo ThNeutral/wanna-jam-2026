@@ -1,7 +1,5 @@
 extends BaseWeapon
 
-@export var player: Player
-
 @export var rotation_speed_degrees: float
 @export var damage: int
 @export var shield_size: int

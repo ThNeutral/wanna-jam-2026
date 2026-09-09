@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cal1pb5kftete" path="res://player/player.tscn" id="1_pq8q7"]
 [ext_resource type="PackedScene" uid="uid://d0gataxv65jwy" path="res://enemy/enemy.tscn" id="2_pyidc"]
 [ext_resource type="PackedScene" uid="uid://8h27cib33mgj" path="res://player/hands/melee.tscn" id="3_huihk"]
-[ext_resource type="PackedScene" uid="uid://neagvi0e7mr1" path="res://player/hands/area_attack.tscn" id="3_tw3kd"]
 [ext_resource type="PackedScene" uid="uid://dta45l4si5xwx" path="res://enemy/enemy_spawner.tscn" id="3_vvh5c"]
 [ext_resource type="PackedScene" uid="uid://dgkl57c4s0w13" path="res://ui/death_ui.tscn" id="4_28aoi"]
 [ext_resource type="PackedScene" uid="uid://dljxsmcujwdvc" path="res://player/hands/rapid_fire.tscn" id="5_tw3kd"]
@@ -23,7 +22,7 @@ size = Vector2(30, 30)
 
 [node name="HandSpawner" parent="." unique_id=1065521359 node_paths=PackedStringArray("player", "item_selector") instance=ExtResource("1_l8v81")]
 hand_pickup_prefab = ExtResource("1_jnlp7")
-weapons = Array[PackedScene]([ExtResource("3_tw3kd"), ExtResource("3_huihk"), ExtResource("5_tw3kd"), ExtResource("6_gd4vy"), ExtResource("7_qw60f")])
+weapons = Array[PackedScene]([ExtResource("3_huihk"), ExtResource("5_tw3kd"), ExtResource("6_gd4vy"), ExtResource("7_qw60f")])
 number_of_hands = 10
 minimal_distance = 100.0
 spawn_area = Rect2(-500, -500, 1000, 1000)

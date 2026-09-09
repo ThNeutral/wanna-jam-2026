@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b5rodmwdk0cfj"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mlk4n"]
+size = Vector2(30, 10)
+
+[node name="MoveSpeedBuff" type="Node2D" unique_id=1819468712]
+
+[node name="Right" type="Sprite2D" parent="." unique_id=996441381]
+position = Vector2(-5, 5)
+rotation = 2.3561945
+skew = -0.7853982
+texture = SubResource("PlaceholderTexture2D_mlk4n")
+
+[node name="Left" type="Sprite2D" parent="." unique_id=47796928]
+position = Vector2(5, 5)
+rotation = 0.7853982
+skew = 0.7853982
+texture = SubResource("PlaceholderTexture2D_mlk4n")

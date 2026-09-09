@@ -44,7 +44,7 @@ func _handle_shoot(delta: float) -> void:
 	if not _is_active:
 		return
 	
-	_shoot_counter += delta
+	_shoot_counter += delta if _is_shooting else _attack_delta(delta)
 	if _is_shooting:
 		if _shoot_counter > shoot_length:
 			_switch_shooting_state(false)
