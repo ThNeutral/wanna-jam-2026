@@ -13,6 +13,7 @@ radius = 50.0
 
 [node name="AreaAttack" type="Node2D"]
 script = ExtResource("1_s0v1j")
+has_super = false
 radius = 50.0
 attack_interval = 0.5
 damage = 1
@@ -24,6 +25,8 @@ texture = SubResource("PlaceholderTexture2D_s0v1j")
 texture = SubResource("PlaceholderTexture2D_65jd7")
 
 [node name="AreaAttackCollider" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaAttackCollider"]
 shape = SubResource("CircleShape2D_s0v1j")

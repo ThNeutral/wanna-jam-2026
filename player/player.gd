@@ -1,96 +1,84 @@
 class_name Player
 extends Node2D
 
+signal died
+
 @export var speed: float
 
-@export var zoom: Vector2
-@export var zoom_step: float 
-
-var shield: int
+@export var zoom_limits: Vector2 = Vector2(0.1, 5.0)
+@export var initial_zoom: float = 1.0
+@export var zoom_step: float
 
 @export var total_health: int
-var received_damage: int = 0
-func _current_health() -> int:
-	return total_health - received_damage
 
-var handles: Array[Node2D] = []
-var passives: Array[Node2D] = []
+var shield: int
+var received_damage: int = 0
+
+var _handles: Array[Node2D] = []
+var _camera: Camera2D
 
 func _ready() -> void:
-	var current_zoom = sqrt(zoom.x + zoom.y)
-	$Camera.zoom = Vector2(current_zoom, current_zoom)
+	_camera = $Camera as Camera2D
 	
-	handles.append($Mounts/MountRT)
-	handles.append($Mounts/MountLT)
-	handles.append($Mounts/MountRB)
-	handles.append($Mounts/MountLB)
+	_handles.append($Mounts/MountRT)
+	_handles.append($Mounts/MountLT)
+	_handles.append($Mounts/MountRB)
+	_handles.append($Mounts/MountLB)
 	
-	passives.append($Multiparts/MultipartTop)
-	passives.append($Multiparts/MultipartMiddle)
-	passives.append($Multiparts/MultipartBottom)
+	_set_zoom(initial_zoom)
+
+func current_health() -> int:
+	return total_health - received_damage
 
 func is_dead() -> bool:
-	return _current_health() <= 0
+	return current_health() <= 0
 
-func receive_damage(damage: int):
-	if shield > 0:
-		shield = max(0, shield - damage)
+func receive_damage(amount: int) -> void:
+	if is_dead():
 		return
 	
-	received_damage += damage
+	if shield > 0:
+		shield = max(0, shield - amount)
+		return
+	
+	received_damage += amount
+	if is_dead():
+		died.emit()
 
-var pan_camera_controls: Dictionary[Key, Vector2] = {
-	KEY_W: Vector2.UP,
-	KEY_S: Vector2.DOWN,
-	KEY_A: Vector2.LEFT,
-	KEY_D: Vector2.RIGHT,
-}
+func add_weapon(weapon: BaseWeapon) -> bool:
+	var index := _get_empty_handle_index()
+	if index == -1:
+		return false
+	
+	weapon.reparent(_handles[index])
+	weapon.position = Vector2.ZERO
+	weapon.rotation = 0.0
+	weapon.set_index(index)
+	weapon.on_added()
+	return true
 
 func _process(delta: float) -> void:
 	_handle_pan_camera(delta)
-	
-func _handle_pan_camera(delta: float) -> void: 
-	var direction = Vector2.ZERO
-	for key in pan_camera_controls.keys():
-		if Input.is_key_pressed(key as Key):
-			direction += pan_camera_controls[key]
-	
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(&"camera_zoom_in"):
+		_set_zoom(_camera.zoom.x + zoom_step)
+	elif event.is_action_pressed(&"camera_zoom_out"):
+		_set_zoom(_camera.zoom.x - zoom_step)
+
+func _set_zoom(value: float) -> void:
+	var clamped := clampf(value, zoom_limits.x, zoom_limits.y)
+	_camera.zoom = Vector2(clamped, clamped)
+
+func _handle_pan_camera(delta: float) -> void:
+	var direction := Input.get_vector(
+		&"move_left", &"move_right", &"move_up", &"move_down"
+	)
 	position += direction * speed * delta
 
-func _input(event):
-	if event is InputEventMouseButton:
-		var next_zoom = $Camera.zoom.x
-		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
-			next_zoom = clamp(next_zoom + zoom_step, zoom.x, zoom.y)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
-			next_zoom = clamp(next_zoom - zoom_step, zoom.x, zoom.y)
-		$Camera.zoom = Vector2(next_zoom, next_zoom)
-
-func add_weapon(weapon: BaseWeapon)-> void:
-	var index = _get_empty_handle_index()
-	assert(index != -1, "No more handles left")
-	var handle = handles[index]
-	weapon.reparent(handle)
-	weapon.on_added(Vector2.ZERO, 0)
-	weapon.set_index(index)
-
-func add_passive(passive: Node2D) -> void:
-	var passive_slot = _get_empty_passive()
-	passive.reparent(passive_slot)
-	passive.global_position = passive_slot.global_position
-	passive.active = true
-
 func _get_empty_handle_index() -> int:
-	for index in handles.size():
-		var handle = handles[index]
-		if handle.get_child_count() == 0:
+	for index in _handles.size():
+		if _handles[index].get_child_count() == 0:
 			return index
 	
 	return -1
-
-func _get_empty_passive()-> Node2D:
-	for passive in passives:
-		if passive.get_child_count() == 0:
-			return passive
-	
-	return null

@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+*.tmp
+/export/
+export_presets.cfg
+
+# Local Godot editor binaries
+/Godot_v*.exe

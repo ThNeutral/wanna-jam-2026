@@ -45,6 +45,8 @@ position = Vector2(0, -10)
 position = Vector2(0, 10)
 
 [node name="PlayerCollider" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCollider"]
 shape = SubResource("RectangleShape2D_4flbx")

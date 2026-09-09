@@ -11,20 +11,21 @@ func add_weapon(new_weapon: BaseWeapon) -> void:
 	add_child(weapon)
 
 func _ready() -> void:
-	$Area2D.area_entered.connect(_on_area_entered)
+	($Area2D as Area2D).area_entered.connect(_on_area_entered)
+
+func _on_area_entered(area: Area2D) -> void:
+	if Combat.player_of(area) == null or weapon == null:
+		return
 	
-func _on_area_entered(area: Area2D):
-	if area.name == "PlayerCollider":
-		var name = weapon.name
-		item_selector.show_choice(
-			[name],
-			_on_selected,
-			_on_cancel
-		)
+	if item_selector == null or player == null:
+		push_warning("HandPickup at %s is not wired to a player or item selector" % global_position)
+		return
+	
+	item_selector.show_choice([weapon.name], _on_selected, _on_cancel)
 
-func _on_selected(name: String):
-	player.add_weapon(weapon)
-	queue_free()
+func _on_selected(_choice: String) -> void:
+	if player.add_weapon(weapon):
+		queue_free()
 
-func _on_cancel():
+func _on_cancel() -> void:
 	queue_free()
