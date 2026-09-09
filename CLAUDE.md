@@ -48,12 +48,12 @@ All three must be silent — no `SCRIPT ERROR`, no `Parse Error`, and the smoke 
 exiting 0. A clean boot takes about 3 seconds and a full import about 15; if either
 suddenly takes minutes, something is generating error spam per loaded resource.
 
-Two things the CLI will *not* tell you:
+Two things the CLI will _not_ tell you:
 
 - **GDScript warnings never reach stdout.** Neither `--check-only` nor `--editor --quit`
   prints them; they only appear in the editor's Script panel. So unused variables,
   base-class shadowing and narrowing conversions will pass every command above. The
-  rules under *GDScript rules* are on you to apply, not the toolchain.
+  rules under _GDScript rules_ are on you to apply, not the toolchain.
 - Headless boot covers scene loading, `_ready`, and enemy spawning; it never picks up a
   weapon or opens a menu. That gap is what `tools/smoke_test.gd` exists to fill.
 
@@ -63,29 +63,29 @@ anything driven by real mouse or key input, which headless never supplies).
 
 ## Layout
 
-| Path | Role |
-| --- | --- |
-| `root.tscn` | Main scene. Wires spawners and UI to `Player` via exported `NodePath`s. |
-| `combat.gd` | `Combat` — collision layer constants + area→entity lookups. |
-| `pause.gd` | `Pause` — reference-counted `SceneTree.paused` owner. |
-| `base_weapon.gd` | `BaseWeapon` — weapon lifecycle and the shared super state machine. |
-| `player/` | `Player`, and every weapon under `player/hands/`. |
-| `enemy/` | `Enemy` and its spawner. |
-| `pickups/` | Map pickups (`HandPickup`) and their placement (`hand_spawner.gd`). |
-| `ui/` | `DeathUI`, `ItemSelector`. |
-| `background/` | TileMap scene and tilesets. |
-| `tools/smoke_test.gd` | Headless gameplay smoke test (79 checks). |
+| Path                  | Role                                                                    |
+| --------------------- | ----------------------------------------------------------------------- |
+| `root.tscn`           | Main scene. Wires spawners and UI to `Player` via exported `NodePath`s. |
+| `combat.gd`           | `Combat` — collision layer constants + area→entity lookups.             |
+| `pause.gd`            | `Pause` — reference-counted `SceneTree.paused` owner.                   |
+| `base_weapon.gd`      | `BaseWeapon` — weapon lifecycle and the shared super state machine.     |
+| `player/`             | `Player`, and every weapon under `player/hands/`.                       |
+| `enemy/`              | `Enemy` and its spawner.                                                |
+| `pickups/`            | Map pickups (`HandPickup`) and their placement (`hand_spawner.gd`).     |
+| `ui/`                 | `DeathUI`, `ItemSelector`.                                              |
+| `background/`         | TileMap scene and tilesets.                                             |
+| `tools/smoke_test.gd` | Headless gameplay smoke test.                                           |
 
 ## Collision layers
 
 Physics does the filtering. Layers are named in `project.godot`:
 
-| Bit | Value | Layer | Used by |
-| --- | --- | --- | --- |
-| 1 | 1 | `player` | `PlayerCollider` |
-| 2 | 2 | `enemy` | `EnemyCollider` |
-| 3 | 4 | `player_weapon` | every weapon hitbox, bullets |
-| 4 | 8 | `pickup` | `HandPickup/Area2D` |
+| Bit | Value | Layer           | Used by                      |
+| --- | ----- | --------------- | ---------------------------- |
+| 1   | 1     | `player`        | `PlayerCollider`             |
+| 2   | 2     | `enemy`         | `EnemyCollider`              |
+| 3   | 4     | `player_weapon` | every weapon hitbox, bullets |
+| 4   | 8     | `pickup`        | `HandPickup/Area2D`          |
 
 Never filter contacts by comparing `area.name` to a string. Set `collision_layer` /
 `collision_mask` on the `Area2D` in the scene, then resolve the entity through
@@ -107,13 +107,13 @@ node. If you nest a hitbox deeper, extend `combat.gd` rather than reaching for
 Everything goes through the `InputMap` in `project.godot` — never
 `Input.is_key_pressed(KEY_W)`.
 
-| Action | Bound to |
-| --- | --- |
-| `move_up` / `move_down` / `move_left` / `move_right` | WASD (physical) + arrows |
-| `weapon_super_1` … `_4` | `1`–`4` and numpad `1`–`4` |
-| `camera_zoom_in` / `camera_zoom_out` | mouse wheel up / down |
-| `restart` | `R` |
-| `cancel` | `Escape` |
+| Action                                               | Bound to                   |
+| ---------------------------------------------------- | -------------------------- |
+| `move_up` / `move_down` / `move_left` / `move_right` | WASD (physical) + arrows   |
+| `weapon_super_1` … `_4`                              | `1`–`4` and numpad `1`–`4` |
+| `camera_zoom_in` / `camera_zoom_out`                 | mouse wheel up / down      |
+| `restart`                                            | `R`                        |
+| `cancel`                                             | `Escape`                   |
 
 Read movement with `Input.get_vector(...)`, which clamps the result to length 1 — summing
 four unit vectors by hand is what made diagonal movement 41% faster than orthogonal.

@@ -5,6 +5,8 @@ extends BaseWeapon
 @export var attack_delay: float
 @export var attack_length: float
 
+@export var super_stun_length: float = 1.5
+
 @export var rotation_speed: float
 @export var maximum_rotation_angle: float
 
@@ -98,4 +100,7 @@ func _on_area_entered(area: Area2D) -> void:
 	
 	var enemy := Combat.enemy_of(area)
 	if enemy != null:
+		if is_in_super:
+			enemy.apply_stun(super_stun_length)
+		
 		enemy.receive_damage(damage)

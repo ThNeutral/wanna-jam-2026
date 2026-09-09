@@ -18,6 +18,7 @@ attack_delay = 1.0
 rotation_speed = 120.0
 attack_length = 0.5
 maximum_rotation_angle = 60.0
+super_stun_length = 2.0
 super_length = 0.5
 
 [node name="Handle" type="Sprite2D" parent="." unique_id=1231384720]

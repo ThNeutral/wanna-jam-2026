@@ -168,7 +168,62 @@ func _phase_wiring() -> void:
 		_check(weapon.name + " declares a super", weapon.has_super)
 	_phase = 2
 
+func _phase_stun() -> void:
+	var dummy := _make_enemy(Vector2(-4000, 2000), 10, 0)
+	dummy.speed = 100.0
+	dummy.player = _laser_player
+	_check("enemy starts unstunned", not dummy.is_stunned())
+
+	var start := dummy.global_position
+	dummy._process(0.1)
+	_check("an unstunned enemy chases the player", dummy.global_position != start)
+
+	dummy.apply_stun(0.5)
+	_check("apply_stun stuns the enemy", dummy.is_stunned())
+
+	var held := dummy.global_position
+	dummy._process(0.1)
+	_check("a stunned enemy does not move", dummy.global_position == held)
+
+	dummy.apply_stun(0.1)
+	_check("a shorter stun does not cut the running one short", dummy.is_stunned())
+
+	dummy._process(0.5)
+	_check("stun expires after its duration", not dummy.is_stunned())
+
+	var resumed := dummy.global_position
+	dummy._process(0.1)
+	_check("the enemy moves again once the stun expires",
+		dummy.global_position != resumed)
+
+	dummy.apply_stun(0.0)
+	_check("a zero-second stun is ignored", not dummy.is_stunned())
+	dummy.queue_free()
+
+	var melee: Variant = _weapons[1]
+	_check("melee configures a super stun length", melee.super_stun_length > 0.0,
+		"length=%.2f" % melee.super_stun_length)
+
+	var plain := _make_enemy(Vector2(-4000, 2500), 100, 0)
+	melee._start_attack()
+	melee._on_area_entered(plain.get_node("EnemyCollider") as Area2D)
+	_check("a normal melee hit damages without stunning",
+		plain.received_damage > 0 and not plain.is_stunned())
+	melee._end_attack()
+	plain.queue_free()
+
+	var stunned := _make_enemy(Vector2(-4000, 3000), 100, 0)
+	melee._start_super()
+	melee._on_area_entered(stunned.get_node("EnemyCollider") as Area2D)
+	_check("melee super stuns the enemy it hits", stunned.is_stunned())
+	_check("melee super still damages the enemy it hits", stunned.received_damage > 0,
+		"damage=%d" % stunned.received_damage)
+	melee._end_super()
+	_check("the stun outlives the super", stunned.is_stunned())
+	stunned.queue_free()
+
 func _phase_combat() -> void:
+	_phase_stun()
 	_check("weapon damaged the enemy", _target.received_damage > 0,
 		"damage=%d" % _target.received_damage)
 	_check("enemy contact damaged the player", _player.received_damage > 0,
