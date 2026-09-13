@@ -100,14 +100,16 @@ func _handle_pan_camera(delta: float) -> void:
 
 func get_empty_passive_slots() -> Array[BasePassive.Slot]:
 	var empty_slots: Array[BasePassive.Slot] = []
-	for slot in BasePassive.Slot.keys():
+	for slot in get_all_passive_slots():
 		if _is_passive_slot_available(slot):
 			empty_slots.append(slot)
-
+	
 	return empty_slots
 
 func get_all_passive_slots() -> Array[BasePassive.Slot]:
-	return BasePassive.Slot.keys()
+	var slots: Array[BasePassive.Slot] = []
+	slots.assign(BasePassive.Slot.values())
+	return slots
 
 func _get_empty_handle_index() -> int:
 	return _find_node_with_no_child(_handles)

@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://b04kclh8s2bud" path="res://player/hands/drone_carrier.tscn" id="6_gd4vy"]
 [ext_resource type="PackedScene" uid="uid://e1otca1mxncu" path="res://ui/item_selector_ui.tscn" id="6_l8v81"]
 [ext_resource type="PackedScene" uid="uid://cu16fiharr3fi" path="res://player/hands/laser.tscn" id="7_qw60f"]
+[ext_resource type="PackedScene" uid="uid://bkpb8ry61fubr" path="res://ui/passive_selection.tscn" id="13_eji0w"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pyidc"]
 size = Vector2(30, 30)
@@ -31,7 +32,6 @@ item_selector = NodePath("../CanvasLayer/ItemSelection")
 
 [node name="Player" parent="." unique_id=1424973268 instance=ExtResource("1_pq8q7")]
 speed = 100.0
-zoom_limits = Vector2(0.1, 5)
 initial_zoom = 2.25
 zoom_step = 0.1
 total_health = 5
@@ -51,7 +51,7 @@ spawn_interval = 1.0
 spawn_radius = 250.0
 player = NodePath("../Player")
 
-[node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
+[node name="Projectiles" type="Node2D" parent="." unique_id=1631647503 groups=["projectiles"]]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1133628485]
 
@@ -60,4 +60,7 @@ visible = false
 player = NodePath("../../Player")
 
 [node name="ItemSelection" parent="CanvasLayer" unique_id=365988320 instance=ExtResource("6_l8v81")]
+visible = false
+
+[node name="PassiveSelection" parent="CanvasLayer" unique_id=1623393888 instance=ExtResource("13_eji0w")]
 visible = false
