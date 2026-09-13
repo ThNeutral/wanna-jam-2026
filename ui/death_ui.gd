@@ -3,24 +3,16 @@ extends Control
 
 const PAUSE_HOLDER: StringName = &"death"
 
-@export var player: Player
-
 func _ready() -> void:
 	visible = false
 	($Button as Button).pressed.connect(_on_button_pressed)
-	if player == null:
-		push_error("DeathUI has no player assigned")
-		return
-	
-	player.died.connect(_on_player_died)
-	if player.is_dead():
-		_on_player_died()
+	MessageBus.subscribe(MessageBus.EventType.PLAYER_DIED, _on_player_died)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed(&"restart"):
 		_restart()
 
-func _on_player_died() -> void:
+func _on_player_died(message: BaseMessage) -> void:
 	visible = true
 	Pause.hold(PAUSE_HOLDER)
 

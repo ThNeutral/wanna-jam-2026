@@ -10,24 +10,27 @@ var _on_cancel: Callable
 
 func _ready() -> void:
 	visible = false
+	
+	MessageBus.subscribe(
+		MessageBus.EventType.PICKED_WEAPON,
+		_show_choice
+	)
 
-func show_choice(
-	names: Array[String],
-	on_success: Callable,
-	on_cancel: Callable
-) -> bool:
-	if _is_showing or names.is_empty():
+func _show_choice(message: BaseMessage) -> bool:
+	if _is_showing:
 		return false
 	
+	var picked_weapon_message = message as PickedWeaponMessage
+	
 	_is_showing = true
-	_on_cancel = on_cancel
+	_on_cancel = picked_weapon_message.on_cancelled
 	visible = true
 	Pause.hold(PAUSE_HOLDER)
 	
-	for choice in names:
-		_add_button(choice, _on_choice_pressed.bind(choice, on_success))
+	for choice in picked_weapon_message.names:
+		_add_button(choice, _on_choice_pressed.bind(choice, picked_weapon_message.on_selected))
 	
-	_add_button("Cancel", _on_cancelled.bind(on_cancel))
+	_add_button("Cancel", _on_cancelled.bind(picked_weapon_message.on_cancelled))
 	return true
 
 func clear_choices() -> void:

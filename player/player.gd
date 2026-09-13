@@ -1,8 +1,6 @@
 class_name Player
 extends Node2D
 
-signal died
-
 @export var speed: float
 
 @export var zoom_limits: Vector2 = Vector2(0.1, 5.0)
@@ -53,7 +51,10 @@ func receive_damage(amount: int) -> void:
 	
 	received_damage += amount
 	if is_dead():
-		died.emit()
+		MessageBus.publish(
+			MessageBus.EventType.PLAYER_DIED,
+			PlayerDiedMessage.new()
+		)
 
 func add_weapon(weapon: BaseWeapon) -> bool:
 	var index := _get_empty_handle_index()

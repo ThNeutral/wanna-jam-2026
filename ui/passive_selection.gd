@@ -1,4 +1,4 @@
-class_name PassiveSelector
+class_name PassiveSelection
 extends Control
 
 const PAUSE_HOLDER: StringName = &"passive_selection"
@@ -12,24 +12,31 @@ var _is_showing: bool = false
 var _on_cancel: Callable
 
 func _ready() -> void:
-	visible = false
+	MessageBus.subscribe(MessageBus.EventType.PICKED_PASSIVE, _show_choice)
 
-func show_choice(on_success: Callable, on_cancel: Callable) -> bool:
-	if _is_showing or player == null:
-		return false
+func _show_choice(message: BaseMessage) -> void:	
+	if _is_showing:
+		return
+	
+	if player == null:
+		push_warning("Player is not set")
+		return
+	
+	var picked_passive_message = message as PickedPassiveMessage
 	
 	_is_showing = true
-	_on_cancel = on_cancel
+	_on_cancel = picked_passive_message.on_cancelled
 	visible = true
 	Pause.hold(PAUSE_HOLDER)
 	
 	var empty_slots := player.get_empty_passive_slots()
 	for slot in player.get_all_passive_slots():
+		var on_success = picked_passive_message.on_selected
 		var on_pressed := _on_slot_pressed.bind(slot, on_success) if empty_slots.has(slot) else Callable()
 		_add_button(_slot_name(slot), on_pressed)
 	
-	_add_button("Cancel", _on_cancelled.bind(on_cancel))
-	return true
+	_add_button("Cancel", _on_cancelled.bind(_on_cancel))
+	return
 
 func clear_choices() -> void:
 	for child in container.get_children():

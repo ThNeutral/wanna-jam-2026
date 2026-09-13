@@ -9,7 +9,6 @@ const NUMBER_OF_ATTEMPTS: int = 1000
 @export var spawn_area: Rect2
 
 @export var player: Player
-@export var item_selector: ItemSelector
 
 func _ready() -> void:
 	_handle_spawn()
@@ -41,7 +40,6 @@ func _find_free_spawn_point(existing: Array[Vector2]) -> Vector2:
 
 func _spawn_hand_pickup(spawn_point: Vector2) -> void:
 	var hand_pickup := hand_pickup_prefab.instantiate() as HandPickup
-	hand_pickup.item_selector = item_selector
 	hand_pickup.player = player
 	add_child(hand_pickup)
 	hand_pickup.global_position = spawn_point

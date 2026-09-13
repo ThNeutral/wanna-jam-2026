@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://boael5r4pptwp"]
+[gd_scene load_steps=16 format=3 uid="uid://boael5r4pptwp"]
 
 [ext_resource type="PackedScene" uid="uid://dfc8neew5bbt8" path="res://background/map.tscn" id="1_eji0w"]
 [ext_resource type="PackedScene" uid="uid://cxcf8ff8ea6ni" path="res://pickups/hand_pickup.tscn" id="1_jnlp7"]
@@ -12,55 +12,59 @@
 [ext_resource type="PackedScene" uid="uid://b04kclh8s2bud" path="res://player/hands/drone_carrier.tscn" id="6_gd4vy"]
 [ext_resource type="PackedScene" uid="uid://e1otca1mxncu" path="res://ui/item_selector_ui.tscn" id="6_l8v81"]
 [ext_resource type="PackedScene" uid="uid://cu16fiharr3fi" path="res://player/hands/laser.tscn" id="7_qw60f"]
+[ext_resource type="PackedScene" uid="uid://dpct1tiyjoc2y" path="res://pickups/passive_pickup.tscn" id="11_qwhpj"]
 [ext_resource type="PackedScene" uid="uid://bkpb8ry61fubr" path="res://ui/passive_selection.tscn" id="13_eji0w"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pyidc"]
 size = Vector2(30, 30)
 
-[node name="Root" type="Node2D" unique_id=1797477681]
+[node name="Root" type="Node2D"]
 
-[node name="Map" parent="." unique_id=514760471 instance=ExtResource("1_eji0w")]
+[node name="Map" parent="." instance=ExtResource("1_eji0w")]
 
-[node name="HandSpawner" parent="." unique_id=1065521359 node_paths=PackedStringArray("player", "item_selector") instance=ExtResource("1_l8v81")]
+[node name="HandSpawner" parent="." node_paths=PackedStringArray("player") instance=ExtResource("1_l8v81")]
 hand_pickup_prefab = ExtResource("1_jnlp7")
 weapons = Array[PackedScene]([ExtResource("3_huihk"), ExtResource("5_tw3kd"), ExtResource("6_gd4vy"), ExtResource("7_qw60f")])
 number_of_hands = 10
 minimal_distance = 100.0
 spawn_area = Rect2(-500, -500, 1000, 1000)
 player = NodePath("../Player")
-item_selector = NodePath("../CanvasLayer/ItemSelection")
 
-[node name="Player" parent="." unique_id=1424973268 instance=ExtResource("1_pq8q7")]
+[node name="Player" parent="." instance=ExtResource("1_pq8q7")]
 speed = 100.0
 initial_zoom = 2.25
 zoom_step = 0.1
 total_health = 5
 
-[node name="Reference" type="Sprite2D" parent="." unique_id=1135059136]
+[node name="Reference" type="Sprite2D" parent="."]
 position = Vector2(73, -42)
 texture = SubResource("PlaceholderTexture2D_pyidc")
 
-[node name="Enemy" parent="." unique_id=1020637669 node_paths=PackedStringArray("player") instance=ExtResource("2_pyidc")]
+[node name="Enemy" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_pyidc")]
 position = Vector2(51, -116)
 speed = 11.0
 player = NodePath("../Player")
 
-[node name="EnemySpawner" parent="." unique_id=977489719 node_paths=PackedStringArray("player") instance=ExtResource("3_vvh5c")]
+[node name="EnemySpawner" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_vvh5c")]
 position = Vector2(-500, -220)
 spawn_interval = 1.0
 spawn_radius = 250.0
 player = NodePath("../Player")
 
-[node name="Projectiles" type="Node2D" parent="." unique_id=1631647503 groups=["projectiles"]]
+[node name="Projectiles" type="Node2D" parent="." groups=["projectiles"]]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1133628485]
+[node name="PassivePickup" parent="." node_paths=PackedStringArray("player") instance=ExtResource("11_qwhpj")]
+position = Vector2(242, 26)
+player = NodePath("../Player")
 
-[node name="DeathUI" parent="CanvasLayer" unique_id=2067959523 node_paths=PackedStringArray("player") instance=ExtResource("4_28aoi")]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DeathUI" parent="CanvasLayer" instance=ExtResource("4_28aoi")]
+visible = false
+
+[node name="ItemSelection" parent="CanvasLayer" instance=ExtResource("6_l8v81")]
+visible = false
+
+[node name="PassiveSelection" parent="CanvasLayer" node_paths=PackedStringArray("player") instance=ExtResource("13_eji0w")]
 visible = false
 player = NodePath("../../Player")
-
-[node name="ItemSelection" parent="CanvasLayer" unique_id=365988320 instance=ExtResource("6_l8v81")]
-visible = false
-
-[node name="PassiveSelection" parent="CanvasLayer" unique_id=1623393888 instance=ExtResource("13_eji0w")]
-visible = false

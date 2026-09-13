@@ -1,7 +1,6 @@
 class_name HandPickup
 extends Node2D
 
-@export var item_selector: ItemSelector
 @export var player: Player
 @export var weapon: BaseWeapon
 
@@ -17,11 +16,15 @@ func _on_area_entered(area: Area2D) -> void:
 	if Combat.player_of(area) == null or weapon == null:
 		return
 	
-	if item_selector == null or player == null:
-		push_warning("HandPickup at %s is not wired to a player or item selector" % global_position)
+	if player == null:
+		push_warning("HandPickup at %s is not wired to a player" % global_position)
 		return
 	
-	item_selector.show_choice([weapon.name], _on_selected, _on_cancel)
+	var message = PickedWeaponMessage.new([weapon.name], _on_selected, _on_cancel)
+	MessageBus.publish(
+		MessageBus.EventType.PICKED_WEAPON,
+		message
+	)
 
 func _on_selected(_choice: String) -> void:
 	if player.add_weapon(weapon):
